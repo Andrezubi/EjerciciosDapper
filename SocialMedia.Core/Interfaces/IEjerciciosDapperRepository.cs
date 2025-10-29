@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialMedia.Core.CustomEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,10 @@ namespace SocialMedia.Core.Interfaces
 {
     public interface IEjerciciosDapperRepository
     {
+        Task<IEnumerable<SimpleUser>> PrimerEjerciciosDapperAsync();
+        Task<IEnumerable<SimplePost>> TercerEjerciciosDapperAsync();
+        Task<IEnumerable<UserAndCantUsers>> CuartoEjerciciosDapperAsync();
+        Task<IEnumerable<PostAndMinorComments>> QuintoEjerciciosDapperAsync();
+        Task<IEnumerable<Weekdays>> SextoEjerciciosDapperAsync();
     }
 }

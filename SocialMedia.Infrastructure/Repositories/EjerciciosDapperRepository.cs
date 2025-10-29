@@ -12,8 +12,8 @@ namespace SocialMedia.Infrastructure.Repositories
 {
     public class EjerciciosDapperRepository : IEjerciciosDapperRepository
     {
-        private readonly DapperContext _dapper;
-        public EjerciciosDapperRepository( DapperContext dapper)
+        private readonly IDapperContext _dapper;
+        public EjerciciosDapperRepository( IDapperContext dapper)
         {
             _dapper = dapper;   
             
