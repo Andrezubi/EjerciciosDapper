@@ -240,5 +240,14 @@ namespace SocialMedia.Api.Controllers
             return NoContent();
         }
         #endregion
+
+
+        [HttpGet("/autoUser")]
+        public async Task<IActionResult> GetAutoUsers()
+        {
+            
+            var users=await _postService.GetAutoUserDapperAsync();
+            return Ok(users);
+        }
     }
 }

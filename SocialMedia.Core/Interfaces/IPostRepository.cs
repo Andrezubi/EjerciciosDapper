@@ -1,4 +1,5 @@
-﻿using SocialMedia.Core.Entities;
+﻿using SocialMedia.Core.CustomEntities;
+using SocialMedia.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace SocialMedia.Core.Interfaces
         //Task InsertPostAsync(Post post);
         //Task UpdatePostAsync(Post post);
         //Task DeletePostAsync(Post post);
+
+        Task<IEnumerable<AutoUser>> GetAutoUserDapperAsync();
     }
 }

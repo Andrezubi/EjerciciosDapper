@@ -1,4 +1,5 @@
-﻿using SocialMedia.Core.Entities;
+﻿using SocialMedia.Core.CustomEntities;
+using SocialMedia.Core.Entities;
 using SocialMedia.Core.Exceptions;
 using SocialMedia.Core.Interfaces;
 using SocialMedia.Core.QueryFilters;
@@ -29,6 +30,10 @@ namespace SocialMedia.Core.Services
             //_postRepository = postRepository;
             //_userRepository = userRepository;
             _unitOfWork = unitOfWork;
+        }
+        public async Task<IEnumerable<AutoUser>> GetAutoUserDapperAsync()
+        {
+            return await _unitOfWork.PostRepository.GetAutoUserDapperAsync();
         }
         public async Task<IEnumerable<Post>> GetAllPostAsync(
             PostQueryFilter postQueryFilter)
@@ -128,5 +133,6 @@ namespace SocialMedia.Core.Services
 
             return false;
         }
+
     }
 }

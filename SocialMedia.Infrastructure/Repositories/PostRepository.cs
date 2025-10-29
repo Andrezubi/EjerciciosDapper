@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SocialMedia.Core.CustomEntities;
 using SocialMedia.Core.Entities;
 using SocialMedia.Core.Enum;
 using SocialMedia.Core.Interfaces;
@@ -76,5 +77,48 @@ namespace SocialMedia.Infrastructure.Repositories
         //    _context.Posts.Remove(post);
         //    await _context.SaveChangesAsync();
         //}
+        public async Task<IEnumerable<AutoUser>> GetAutoUserDapperAsync()
+        {
+            try
+            {
+                var sql = _dapper.Provider switch
+                {
+                    DatabaseProvider.SqlServer => @"
+                    SELECT DISTINCT
+                        u.FirstName,
+                        u.LastName,
+                        u.Email
+                    FROM [dbo].[User] AS u
+                    INNER JOIN [dbo].[Post] AS p ON u.Id = p.UserId
+                    INNER JOIN [dbo].[Comment] AS c ON p.Id = c.PostId
+                    WHERE c.UserId = p.UserId;
+                
+            ",
+
+                    DatabaseProvider.MySql => @"
+                SELECT DISTINCT
+                    u.FirstName,
+                    u.LastName,
+                    u.Email
+                FROM User u
+                INNER JOIN Post p ON u.Id = p.UserId
+                INNER JOIN Comment c ON p.Id = c.PostId
+               ;
+            ",
+
+                    _ => throw new NotSupportedException("Provider no soportado")
+                };
+
+                // ✅ Pasamos el parámetro @Limit a Dapper
+                
+
+                return await _dapper.QueryAsync<AutoUser>(sql);
+            }
+            catch (Exception err)
+            {
+                throw new Exception($"Error en GetAutoUserDapperAsync: {err.Message}");
+            }
+        }
     }
 }
+     

@@ -20,17 +20,25 @@ namespace SocialMedia.Api
             var builder = WebApplication.CreateBuilder(args);
 
             #region Configurar la BD SqlServer
-            //var connectionString = builder.Configuration.GetConnectionString("ConnectionSqlServer");
-            //builder.Services.AddDbContext<SocialMediaContext>(options => options.UseSqlServer(connectionString));
+            var connectionString = builder.Configuration.GetConnectionString("ConnectionSqlServer");
+            builder.Services.AddDbContext<SocialMediaContext>(options => options.UseSqlServer(connectionString));
             #endregion
 
             #region Configurar la BD MySql
-            var connectionString = builder.Configuration.GetConnectionString("ConnectionMySql");
-            builder.Services.AddDbContext<SocialMediaContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            //var connectionString = builder.Configuration.GetConnectionString("ConnectionMySql");
+            //builder.Services.AddDbContext<SocialMediaContext>(options =>
+              //  options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
             #endregion
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
+
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+
 
             // Inyectar las dependencias
             //builder.Services.AddTransient<IPostRepository, PostRepository>();
@@ -69,6 +77,13 @@ namespace SocialMedia.Api
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
 
             app.UseHttpsRedirection();
 
